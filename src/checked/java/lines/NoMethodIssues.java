@@ -1,4 +1,4 @@
-package hu.zkiss.checkstyle;
+package lines;
 
 public class NoMethodIssues {
 

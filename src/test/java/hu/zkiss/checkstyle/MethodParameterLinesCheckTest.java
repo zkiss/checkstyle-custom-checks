@@ -89,21 +89,21 @@ class MethodParameterLinesCheckTest {
 
     @Test
     void noMethodIssues() throws Exception {
-        checker.process(List.of(new File("src/test/java/hu/zkiss/checkstyle/NoMethodIssues.java")));
+        checker.process(List.of(new File("src/checked/java/lines/NoMethodIssues.java")));
 
         assertThat(errors).isEmpty();
     }
 
     @Test
     void noConstructorIssues() throws Exception {
-        checker.process(List.of(new File("src/test/java/hu/zkiss/checkstyle/NoConstructorIssues.java")));
+        checker.process(List.of(new File("src/checked/java/lines/NoConstructorIssues.java")));
 
         assertThat(errors).isEmpty();
     }
 
     @Test
     void MethodParamsNotAllOneLineOrSeparateLines() throws Exception {
-        checker.process(List.of(new File("src/test/java/hu/zkiss/checkstyle/MethodParamsNotAllOneLineOrSeparateLines.java")));
+        checker.process(List.of(new File("src/checked/java/lines/MethodParamsNotAllOneLineOrSeparateLines.java")));
 
         assertThat(errors).hasSize(1);
         assertError(errors, 4, 5, "Method parameters must be placed on a single line or in separate lines.");
@@ -111,7 +111,7 @@ class MethodParameterLinesCheckTest {
 
     @Test
     void ConstructorParamsNotAllOneLineOrSeparateLines() throws Exception {
-        checker.process(List.of(new File("src/test/java/hu/zkiss/checkstyle/ConstructorParamsNotAllOneLineOrSeparateLines.java")));
+        checker.process(List.of(new File("src/checked/java/lines/ConstructorParamsNotAllOneLineOrSeparateLines.java")));
 
         assertThat(errors).hasSize(1);
         assertError(errors, 4, 5, "Method parameters must be placed on a single line or in separate lines.");

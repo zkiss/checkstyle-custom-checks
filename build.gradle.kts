@@ -14,6 +14,10 @@ java {
     targetCompatibility = JavaVersion.VERSION_11
 }
 
+sourceSets {
+    create("checked") {} // for the files we run the checks on
+}
+
 dependencies {
     implementation("com.puppycrawl.tools:checkstyle:8.38")
 

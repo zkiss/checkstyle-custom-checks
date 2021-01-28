@@ -1,4 +1,4 @@
-package hu.zkiss.checkstyle;
+package lines;
 
 public class ConstructorParamsNotAllOneLineOrSeparateLines {
     ConstructorParamsNotAllOneLineOrSeparateLines(int p1, int p2, int p3,
