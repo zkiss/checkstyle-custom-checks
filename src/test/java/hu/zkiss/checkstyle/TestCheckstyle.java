@@ -19,7 +19,7 @@ public class TestCheckstyle {
         });
     }
 
-    static Checker createChecker(Class<? extends AbstractCheck> check, List<AuditEvent> errors, Consumer<Configuration> cfg) {
+    static Checker createChecker(Class<? extends AbstractCheck> check, List<AuditEvent> errors, Consumer<? super DefaultConfiguration> cfg) {
         try {
             var checkConfig = new DefaultConfiguration(check.getName());
             cfg.accept(checkConfig);
@@ -91,7 +91,7 @@ public class TestCheckstyle {
         this(check, __ -> {});
     }
 
-    public TestCheckstyle(Class<? extends AbstractCheck> check, Consumer<Configuration> cfg) {
+    public TestCheckstyle(Class<? extends AbstractCheck> check, Consumer<? super DefaultConfiguration> cfg) {
         errors = new ArrayList<>();
         checker = createChecker(check, errors, cfg);
     }

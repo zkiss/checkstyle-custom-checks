@@ -24,13 +24,24 @@ class MethodParameterLinesCheckTest {
     void MethodParamsNotAllOneLineOrSeparateLines() {
         checkstyle.check("lines/MethodParamsNotAllOneLineOrSeparateLines.java");
 
-        checkstyle.assertViolation(4, 5, "Method parameters must be placed on a single line or in separate lines.");
+        checkstyle.assertViolation(4, 5, "Method parameters must be placed on a single line or on separate lines.");
     }
 
     @Test
     void ConstructorParamsNotAllOneLineOrSeparateLines() {
         checkstyle.check("lines/ConstructorParamsNotAllOneLineOrSeparateLines.java");
 
-        checkstyle.assertViolation(4, 5, "Method parameters must be placed on a single line or in separate lines.");
+        checkstyle.assertViolation(4, 5, "Method parameters must be placed on a single line or on separate lines.");
+    }
+
+    @Test
+    void should_not_allow_single_line_when_configured() {
+        var checkstyle = new TestCheckstyle(MethodParameterLinesCheck.class,
+                c -> c.addAttribute("allowSingleLine", "false"));
+
+        checkstyle.check("lines/NoMethodIssues.java");
+
+        checkstyle.assertViolation(31,5,"Method parameters must be placed on separate lines.");
+        checkstyle.assertViolation(35,5,"Method parameters must be placed on separate lines.");
     }
 }

@@ -56,7 +56,10 @@ public class MethodParameterLinesCheck extends AbstractCheck {
     private static boolean allSame(List<Integer> lines) {
         return new HashSet<>(lines).size() == 1;
     }
+
     public static final String MSG_PARAMS_LINES = "method.params.lines";
+    public static final String MSG_PARAMS_SEPARATE_LINES = "method.params.separate-lines";
+
     private boolean allowSingleLine = true;
 
     public void setAllowSingleLine(boolean allowSingleLine) {
@@ -97,6 +100,9 @@ public class MethodParameterLinesCheck extends AbstractCheck {
             return;
         }
 
-        log(ast.getLineNo(), ast.getColumnNo(), MSG_PARAMS_LINES);
+        if (allowSingleLine)
+            log(ast.getLineNo(), ast.getColumnNo(), MSG_PARAMS_LINES);
+        else
+            log(ast.getLineNo(), ast.getColumnNo(), MSG_PARAMS_SEPARATE_LINES);
     }
 }
