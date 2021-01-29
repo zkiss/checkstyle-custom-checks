@@ -15,12 +15,9 @@ import java.util.stream.Stream;
 @StatelessCheck
 public class MethodParameterLinesCheck extends AbstractCheck {
 
-    public static final String MSG_PARAMS_LINES = "method.params.lines";
-    private boolean allowSingleLine = true;
-
     private static DetailAST getFirstChild(DetailAST ast, int type) {
         return stream(ast.getFirstChild())
-                .filter(it->it.getType() == type)
+                .filter(it -> it.getType() == type)
                 .findFirst()
                 .get();
     }
@@ -59,6 +56,8 @@ public class MethodParameterLinesCheck extends AbstractCheck {
     private static boolean allSame(List<Integer> lines) {
         return new HashSet<>(lines).size() == 1;
     }
+    public static final String MSG_PARAMS_LINES = "method.params.lines";
+    private boolean allowSingleLine = true;
 
     public void setAllowSingleLine(boolean allowSingleLine) {
         this.allowSingleLine = allowSingleLine;
