@@ -14,12 +14,8 @@ import java.util.function.Consumer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class TestCheckstyle {
-    static Checker createChecker(Class<? extends AbstractCheck> check, List<AuditEvent> errors) {
-        return createChecker(check, errors, (__) -> {
-        });
-    }
 
-    static Checker createChecker(Class<? extends AbstractCheck> check, List<AuditEvent> errors, Consumer<? super DefaultConfiguration> cfg) {
+    private static Checker createChecker(Class<? extends AbstractCheck> check, List<AuditEvent> errors, Consumer<? super DefaultConfiguration> cfg) {
         try {
             var checkConfig = new DefaultConfiguration(check.getName());
             cfg.accept(checkConfig);
@@ -34,7 +30,7 @@ public class TestCheckstyle {
         }
     }
 
-    static File checkedFile(String name) {
+    private static File checkedFile(String name) {
         return new File("src/checked/java/" + name);
     }
 
