@@ -1,5 +1,6 @@
 plugins {
-    java
+    `java-library`
+    `maven-publish`
 }
 
 group = "hu.zkiss.checkstyle"
@@ -19,7 +20,7 @@ sourceSets {
 }
 
 dependencies {
-    implementation("com.puppycrawl.tools:checkstyle:8.38")
+    api("com.puppycrawl.tools:checkstyle:8.38")
 
     testImplementation(platform("org.junit:junit-bom:5.7.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
@@ -33,3 +34,10 @@ tasks.withType<Test> {
     }
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            from(components["java"])
+        }
+    }
+}
