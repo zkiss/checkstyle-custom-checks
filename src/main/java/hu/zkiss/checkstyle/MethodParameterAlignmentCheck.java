@@ -10,7 +10,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static java.lang.Math.min;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.Collectors.toMap;
 
 @StatelessCheck
 public class MethodParameterAlignmentCheck extends AbstractCheck {
@@ -66,25 +68,13 @@ public class MethodParameterAlignmentCheck extends AbstractCheck {
     public void visitToken(DetailAST ast) {
         final DetailAST parameters = getFirstChild(ast, TokenTypes.PARAMETERS);
 
-        Set<Integer> uniqueFirstColNumbersInLines = walkDfs(parameters.getFirstChild())
-                .collect(Collectors.toMap(
-                        it -> (Integer) it.getLineNo(),
-                        it -> {
-                            ArrayList<Integer> r = new ArrayList<>();
-                            r.add(it.getColumnNo());
-                            return r;
-                        },
-                        (l1, l2) -> {
-                            ArrayList<Integer> allColNumbersInLine = new ArrayList<>(l1);
-                            allColNumbersInLine.addAll(l2);
-                            Collections.sort(allColNumbersInLine);
-                            return allColNumbersInLine;
-                        }
+        Set<Integer> uniqueFirstColNumbersInLines = new HashSet<>(walkDfs(parameters.getFirstChild())
+                .collect(toMap(
+                        it -> it.getLineNo(),
+                        it -> it.getColumnNo(),
+                        (c1, c2) -> min(c1, c2)
                 ))
-                .entrySet()
-                .stream()
-                .map(e -> e.getValue().get(0))
-                .collect(Collectors.toSet());
+                .values());
 
         if (uniqueFirstColNumbersInLines.size() > 1) {
             log(ast.getLineNo(), ast.getColumnNo(), MSG_PARAM_ALIGNMENT);
