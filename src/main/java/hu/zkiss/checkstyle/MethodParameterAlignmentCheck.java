@@ -42,6 +42,7 @@ public class MethodParameterAlignmentCheck extends AbstractCheck {
             @Override
             public DetailAST next() {
                 DetailAST r = q.pop();
+                if(r==null) return null;
                 if(r.getNextSibling() != null) q.push(r.getNextSibling());
                 if(r.hasChildren()) q.push(r.getFirstChild());
                 return r;
@@ -69,6 +70,7 @@ public class MethodParameterAlignmentCheck extends AbstractCheck {
         final DetailAST parameters = getFirstChild(ast, TokenTypes.PARAMETERS);
 
         Set<Integer> uniqueFirstColNumbersInLines = new HashSet<>(walkDfs(parameters.getFirstChild())
+                .filter(Objects::nonNull)
                 .collect(toMap(
                         it -> it.getLineNo(),
                         it -> it.getColumnNo(),
